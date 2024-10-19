@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloons and Candles</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: none;
+            background: url('imgg.gif') no-repeat center center fixed;
+            background-size: cover;
+        }
+        #inputContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f1f1f1;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        #submitBtn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #errorMessage {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="inputContainer">
+        <h2>Please Enter Your Details</h2>
+        <input type="text" id="nameInput" placeholder="Enter your name" />
+        <input type="text" id="dobInput" placeholder="Enter your DOB (DD/MM/YYYY)" />
+        <button id="submitBtn">Submit</button>
+        <div id="errorMessage"></div>
+    </div>
+
+    <canvas id="starCanvas"></canvas>
+
+    <script>
+        const correctName = "vikky";  // Change this to the correct name
+        const correctDOB = "01/01/2000";  // Change this to the correct DOB
+
+        const inputContainer = document.getElementById('inputContainer');
+        const nameInput = document.getElementById('nameInput');
+        const dobInput = document.getElementById('dobInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const canvas = document.getElementById("starCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const colors = ["yellow", "red", "orange", "white", "blue", "green"];
+        const stars = [];
+        const balloons = [];
+        let candles = [];
+        const sound = new Audio("min.wav");
+
+        // Function to check the input
+        function validateInput() {
+            const enteredName = nameInput.value.trim();
+            const enteredDOB = dobInput.value.trim();
+
+            if (enteredName === correctName && enteredDOB === correctDOB) {
+                errorMessage.textContent = "";
+                inputContainer.style.display = "none";  // Hide input form
+                canvas.style.display = "block";  // Show canvas
+                init();  // Initialize animation
+                animate();  // Start animation
+                playSound();  // Play sound
+            } else {
+                errorMessage.textContent = "Incorrect name or DOB. Please try again.";
+            }
+        }
+
+        // Balloon constructor
+        function Balloon(x, y, size, color) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.color = color;
+            this.speed = Math.random() * 2 + 1;
+        }
+
+        // Draw balloon
+        Balloon.prototype.draw = function () {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+            // String for the balloon
+            ctx.moveTo(this.x, this.y + this.size);
+            ctx.lineTo(this.x, this.y + this.size + 30);
+            ctx.stroke();
+        };
+
+        // Update balloon position
+        Balloon.prototype.update = function () {
+            this.y -= this.speed;  // Move upward
+            if (this.y + this.size < 0) {  // Reset balloon position when it leaves the screen
+                this.y = canvas.height + this.size;
+                this.x = Math.random() * canvas.width;
+            }
+            this.draw();
+        };
+
+        // Candle constructor
+        function Candle(x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 10;
+            this.height = 50;
+            this.flameHeight = 15;
+            this.blinkTimer = 0; // Timer to control blinking
+        }
+
+        // Draw candle
+        Candle.prototype.draw = function () {
+            // Draw the candle base
+            ctx.fillStyle = "brown";
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+
+            // Control the blinking effect using a timer
+            this.blinkTimer += 1;
+            const isBlinking = Math.sin(this.blinkTimer / 10) > 0;  // Makes a smooth blink pattern
+
+            if (isBlinking) {
+                // Draw the glowing flame only when not blinking
+                const gradient = ctx.createRadialGradient(this.x + 5, this.y - this.flameHeight, 5, this.x + 5, this.y - this.flameHeight, 15);
+                gradient.addColorStop(0, "yellow");
+                gradient.addColorStop(0.5, "orange");
+                gradient.addColorStop(1, "red");
+
+                ctx.beginPath();
+                ctx.arc(this.x + 5, this.y - this.flameHeight, 15, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        };
+
+        // Star constructor
+        function Star(x, y, size, color) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.color = color;
+            this.speed = Math.random() * 2 + 1;
+        }
+
+        // Draw star function
+        Star.prototype.draw = function () {
+            const spikes = 5;
+            const outerRadius = this.size;
+            const innerRadius = this.size / 2;
+
+            let rotation = Math.PI / 2 * 3;
+            let x = this.x;
+            let y = this.y;
+            let step = Math.PI / spikes;
+
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - outerRadius);
+            for (let i = 0; i < spikes; i++) {
+                x = this.x + Math.cos(rotation) * outerRadius;
+                y = this.y + Math.sin(rotation) * outerRadius;
+                ctx.lineTo(x, y);
+                rotation += step;
+
+                x = this.x + Math.cos(rotation) * innerRadius;
+                y = this.y + Math.sin(rotation) * innerRadius;
+                ctx.lineTo(x, y);
+                rotation += step;
+            }
+            ctx.lineTo(this.x, this.y - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        };
+
+        // Update star position
+        Star.prototype.update = function () {
+            this.y += this.speed;
+            if (this.y > canvas.height) {
+                this.y = -this.size;
+                this.x = Math.random() * canvas.width;
+            }
+            this.draw();
+        };
+
+        // Initialize stars, balloons, and candles
+        function init() {
+            // Create stars
+            for (let i = 0; i < 120; i++) {
+                const size = Math.random() * 10 + 5;
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                stars.push(new Star(x, y, size, color));
+            }
+
+            // Create balloons
+            for (let i = 0; i < 30; i++) {
+                const size = Math.random() * 20 + 15;
+                const x = Math.random() * canvas.width;
+                const y = canvas.height + Math.random() * 200; // Start balloons slightly off-screen at the bottom
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                balloons.push(new Balloon(x, y, size, color));
+            }
+
+            // Draw candles at fixed positions
+            candles = [
+                new Candle(100, canvas.height - 60),
+                new Candle(200, canvas.height - 60),
+                new Candle(300, canvas.height - 60),
+                new Candle(400, canvas.height - 60)
+            ];
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw stars
+            stars.forEach(star => star.update());
+
+            // Update and draw balloons
+            balloons.forEach(balloon => balloon.update());
+
+            // Draw candles
+            candles.forEach(candle => candle.draw());
+
+            requestAnimationFrame(animate);
+        }
+
+        // Function to play sound effect
+        function playSound() {
+            sound.play();
+        }
+
+        // Event listener for submit button
+        submitBtn.addEventListener('click', validateInput);
+    </script>
+</body>
+</html>
