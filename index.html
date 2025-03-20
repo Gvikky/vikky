@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrapbook for My Best Friend</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('file:///C:/Users/Lenovo/Desktop/vikky/vikkyyy/dp1.webp') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }   
+        .container {
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .title {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 4px #fcf6f6;
+        }
+        .subtitle {
+            font-size: 2em;
+            color: rgb(7, 22, 238);
+            text-shadow: 2px 2px 4px rgb(8, 8, 8)
+
+        }
+        .text1 {
+            color: coral;
+        }
+        .text2 {
+            color: #076ff8
+        }
+        .text3 {
+            color: #fbff04;
+        }
+        .text4 {
+            color: red;
+        }
+        .text5 {
+            font-weight: bold;
+            color: red;
+        }
+        .page {
+            display: none;
+            margin: 20px auto;
+            padding: 25px;
+            background:url(b1.webp);
+            background-size: cover;
+            border-radius: 10px;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgb(250, 4, 4);
+            animation: slideIn 1s ease-in-out;
+        }
+        .page img {
+            max-width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .page img:hover {
+            transform: scale(1.05);
+        }
+        .page1 {
+            display: none;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: #fcf6f6;
+            background-size: cover;
+            border-radius: 10px;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgba(7, 7, 7, 0.2);
+            animation: slideIn 1s ease-in-out;
+        }
+        .page1 img {
+            max-width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .page1 img:hover {
+            transform: scale(1.05);
+        }
+        .page2 {
+            display: none;
+            margin: 20px auto;
+            padding: 25px;
+            background:url(b2.webp);
+            background-size: cover;
+            border-radius: 10px;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgba(7, 7, 7, 0.2);
+            animation: slideIn 1s ease-in-out;
+        }
+        .page2 img {
+            max-width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .page2 img:hover {
+            transform: scale(1.05);
+        }
+        .page3 {
+            display: none;
+            margin: 20px auto;
+            padding: 25px;
+            background:url(b3.webp);
+            background-size: cover;
+            border-radius: 10px;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgba(7, 7, 7, 0.2);
+            animation: slideIn 1s ease-in-out;
+        }
+        .page3 img {
+            max-width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .page3 img:hover {
+            transform: scale(1.05);
+        }
+        .page4 {
+            display: none;
+            margin: 20px auto;
+            padding: 25px;
+            background:url(b5.webp);
+            background-size: cover;
+            border-radius: 10px;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgba(7, 7, 7, 0.2);
+            animation: slideIn 1s ease-in-out;
+        }
+        .page4 img {
+            max-width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .page4 img:hover {
+            transform: scale(1.05);
+        }
+        .page5 {
+            display: none;
+            margin: 20px auto;
+            padding: 25px;
+            background:url(b4.webp);
+            background-size: cover;
+            border-radius: 10px;
+            max-width: 700px;
+            box-shadow: 0 4px 10px rgb(14, 13, 13);
+            animation: slideIn 1s ease-in-out;
+        }
+        .page5 img {
+            max-width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .page5 img:hover {
+            transform: scale(1.05);
+        }
+        .funny-quote {
+            font-style: italic;
+            color: #000000;
+        }
+        .clever-note {
+            color: #050505;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background: #06f006;
+            color: #fdfbfb;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #4343d0;
+        }
+        .image-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .thumbnail {
+            width: 15%;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+        /* Modal (For Enlarged Image) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Scrapbook for Nirmala</div>
+    <div class="subtitle">Because even legends need a tribute!</div>
+
+    <div>
+        <button class="button" onclick="showChapter('chapter1')">Chapter 1: A historic moment—right up there with the Titanic hitting the iceberg</button>
+        <button class="button" onclick="showChapter('chapter2')">Chapter 2: Our Adventures</button>
+        <button class="button" onclick="showChapter('chapter3')">Chapter 3: The Roast Edition</button>
+        <button class="button" onclick="showChapter('chapter4')">Chapter 4: Songs That Define Us</button>
+        <button class="button" onclick="showChapter('chapter5')">Chapter 5: The Meme Hall of Fame</button>
+        <button class="button" onclick="showChapter('chapter6')">Chapter 6: Future Goals</button>
+    </div>
+
+    <div class="page" id="chapter1">
+        <h2 class="text1">Chapter 1: The Day We Met</h2>
+        <p class="text2">"Some people win the lottery. Me? I got you—the grand prize in life's Chaos contest."</p>
+        <img src="1p.jpg" alt="first meet" class="thumbnail" onclick="openImage(this)">
+        <p class="funny-quote">"Friendship is realizing your best friend is a limited-edition masterpiece—with a crack of madness!"</p>
+    </div>
+
+    <div class="page1" id="chapter2">
+        <h2>Chapter 2: Our Adventures and College Diaries</h2>
+        <p class="text2">From conquering boring weekdays to mastering late-night gossip sessions, we've done it all!</p>
+    <div class="image-group">
+        <img src="2p.jpg" alt="Adventures" class="thumbnail" onclick="openImage(this)">
+        <img src="3p.jpg" alt="College Fun" class="thumbnail" onclick="openImage(this)">
+        <img src="4p.jpg" alt="Late Night Gossip" class="thumbnail" onclick="openImage(this)">
+        <img src="5p.jpg" alt="Random Shenanigans" class="thumbnail" onclick="openImage(this)">             
+        <img src="6p.jpg" alt="Festival Vibes" class="thumbnail" onclick="openImage(this)">
+        <img src="7p.jpg" alt="Foodie Adventures" class="thumbnail" onclick="openImage(this)">
+        <img src="8p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="9p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="10p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="11p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="12p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="13p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="14p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="15p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="16p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="17p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="18p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="27p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="28p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="29p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">    
+        <img src="30p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="31p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="32p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+
+    </div>
+        <p class="clever-note">"No GPS? No problem! Lost with you is my favorite destination."</p>
+    </div>
+
+    <div class="page2" id="chapter3">
+        <h2 class="text4">Chapter 3: funnier chats</h2>
+        <p class="text3">There is lot to mention it. here is one</p>
+        <img src="19p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="20p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <p class="text4">"If sarcasm were a currency, we'd be billionaires by now!"</p>
+    </div>
+
+    <div class="page3" id="chapter4">
+        <h2>Chapter 4: Songs That Define Us</h2>
+        <p class="text3">Every epic friendship deserves an equally epic playlist:</p>
+        <ul class="song-list"></ul>
+        <audio id="audioPlayer" controls>
+            <source id="audioSource" src="1s.mp3" type="audio/mpeg">
+        </audio>
+        
+        <ul id="playlist">
+            <li><button onclick="playSong('1s.mp3')">Song 1</button></li>
+            <li><button onclick="playSong('2s.mp3')">Song 2</button></li>
+            <li><button onclick="playSong('3s.mp3')">Song 3</button></li>
+            <li><button onclick="playSong('4s.mp3')">Song 4</button></li>
+            <li><button onclick="playSong('5s.mp3')">Song 5</button></li>
+            <li><button onclick="playSong('6s.mp3')">Song 6</button></li>
+            <li><button onclick="playSong('7s.mp3')">Song 7</button></li>
+            <li><button onclick="playSong('8s.mp3')">Song 8</button></li>
+            <li><button onclick="playSong('9s.mp3')">Song 9</button></li>
+            <li><button onclick="playSong('10s.mp3')">Song 10</button></li>
+            <li><button onclick="playSong('11s.mp3')">Song 11</button></li>
+        </ul>    
+    </div>
+
+    <div class="page1" id="chapter5">
+        <h2>Chapter 5: Memes that made you laugh</h2>
+        <p>The meme you made to laugh. Here is some</p>
+        <img src="21p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="22p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="23p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="24p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="25p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+        <img src="26p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)">
+
+        
+    </div>
+
+    <div class="page5" id="chapter6">
+        <h2 class="text1">Chapter 6: Future goals</h2>
+        <p class="text5">"When people ask about your future goals, just show them a menu and a pillow!"</p>
+        <video width="30%" controls>
+        <source src="1v.mp4" type="video/mp4">
+        </video>
+        <img src="33p.jpg" alt="Library Struggles" class="thumbnail" onclick="openImage(this)" style="width: 50%; max-width: 300px; height: auto;">
+        <p class="text5">"You're really a god gifted child ra"</p>
+
+    </div>
+
+    <!-- Modal (For Enlarged Image) -->
+        
+    <div id="imageModal" class="modal" onclick="closeImage()">
+        <span class="close" onclick="closeImage()">&times;</span>
+        <img class="modal-content" id="fullImage">
+    </div>
+    
+    <script>
+        const audioPlayer = document.getElementById("audioPlayer");
+        const audioSource = document.getElementById("audioSource");
+        
+        function playSong(song) {
+            audioSource.src = song;
+            audioPlayer.load(); // Reload the new source
+            audioPlayer.play(); // Play the selected song
+        }
+
+        function showChapter(chapterId) {
+            // Hide all elements with class names starting with 'page'
+            document.querySelectorAll('[class^="page"]').forEach(page => page.style.display = 'none');
+    
+            // Show the selected chapter
+            document.getElementById(chapterId).style.display = 'block';
+        }
+
+        function openImage(imgElement) {
+            document.getElementById("fullImage").src = imgElement.src;
+            document.getElementById("imageModal").style.display = "flex";
+        }
+
+        function closeImage() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
